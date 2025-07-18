@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport"> 
+  <meta charset="UTF-8">
+<body>
+<!-- <div class="timer-container"> -->
+  <!-- <svg class="progress-ring" width="200" height="200">
+    <circle class="progress-ring__bg" r="90" cx="100" cy="100" />
+    <circle class="progress-ring__circle" r="90" cx="100" cy="100" />
+  </svg> -->
+<!--   
+  <span id="time-display" class="timer-text">00:00</span> -->
+</div>
+</body>
+  <title> B . PI . E </title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #a59999;
+      padding: 50px;
+
+    }
+    button {
+      padding: 10px 20px;
+      background : rgb(99, 82, 82);  
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition : .2s ;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+    /* #timer { */
+      /* font-size: 23px;
+      margin: 100px;
+      border:2px;
+      background:rgb(185, 185, 214); 
+  
+  font-family: 'Orbitron', sans-serif; 
+  font-size: 64px;
+  color: #E0E0E0; 
+  background-color: #2C3E50;
+  padding: 20px 40px;
+  border-radius: 15px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
+  text-align: center;
+  width: fit-content; 
+  margin: 20px auto; 
+} */
+ #timer {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 72px;
+  color: #00FFD1; /* لون سيان فاتح زي النيون */
+  background: #1A1A1A; /* خلفية سوداء تمامًا */
+  padding: 25px 45px;
+  border-radius: 20px;
+  border: 2px solid #00FFD1;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+  
+  /* أهم جزء: تأثير النيون */
+  box-shadow: 0 0 5px #00FFD1, 
+              0 0 15px #00FFD1, 
+              0 0 30px #00FFD1,
+              inset 0 0 5px #00FFD1;
+
+  text-shadow: 0 0 5px #00FFD1, 0 0 10px #00FFD1;
+
+  /* حركة نبض خفيفة */
+  animation: pulse 2s infinite alternate;
+}
+
+/* تعريف حركة النبض */
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 5px #00FFD1, 
+                0 0 15px #00FFD1, 
+                0 0 30px #00FFD1,
+                inset 0 0 5px #00FFD1;
+  }
+  to {
+    box-shadow: 0 0 10px #00FFD1, 
+                0 0 30px #00FFD1, 
+                0 0 60px #00FFD1,
+                inset 0 0 10px #00FFD1;
+  }
+}
+.timer-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+}
+
+.timer-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  color: #E0E0E0;
+}
+
+.progress-ring__bg {
+  fill: transparent;
+  stroke: #4A4A4A; /* لون الدائرة الخلفية */
+  stroke-width: 10;
+}
+
+.progress-ring__circle {
+  fill: transparent;
+  stroke: #00A9FF; /* لون دائرة الوقت */
+  stroke-width: 10;
+  stroke-linecap: round; /* حواف دائرية للخط */
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 1s linear;
+}
+    
+  </style>
+</head>
+<body>
+  <h1>⏱️ System: Study = Break</h1>
+
+  <button onclick="startStudy()">Start Studying</button>
+  <button onclick="pauseStudy()">Pause</button>
+  <button onclick="resumeStudy()">Resume</button>
+  <button onclick="resetStudy()">Reset</button>
+  <button onclick="endStudy()">Finish Studying</button>
+
+  <div id="timer">00:00</div>
+  <div id="output"></div>
+
+  <script>
+    let studyStartTime;
+    let breakTimer;
+    let studyInterval;
+    let totalSeconds = 0;
+    let isPaused = false;
+
+    function updateTimerDisplay() {
+      const min = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+      const sec = String(totalSeconds % 60).padStart(2, '0');
+      document.getElementById("timer").textContent = `${min}:${sec}`;
+    }
+
+    // Start studying and timer
+    function startStudy() {
+      if (studyInterval) return; // Prevent multiple intervals
+      studyStartTime = new Date();
+      isPaused = false;
+      studyInterval = setInterval(() => {
+        if (!isPaused) {
+          totalSeconds++;
+          updateTimerDisplay();
+        }
+      }, 1000);
+      document.getElementById("output").textContent = "📚 Study session started... Stay focused!";
+    }
+
+    // Pause timer
+    function pauseStudy() {
+      isPaused = true;
+      document.getElementById("output").textContent = "⏸️ Study paused.";
+    }
+
+    // Resume timer
+    function resumeStudy() {
+      if (studyInterval && isPaused) {
+        isPaused = false;
+        document.getElementById("output").textContent = "▶️ Resumed studying.";
+      }
+    }
+
+    // Reset timer
+    function resetStudy() {
+      clearInterval(studyInterval);
+      studyInterval = null;
+      totalSeconds = 0;
+      updateTimerDisplay();
+      document.getElementById("output").textContent = "🔄 Study timer reset.";
+    }
+
+    // End study session
+    function endStudy() {
+      if (!totalSeconds) {
+        alert("Please start the study session first!");
+        return;
+      }
+
+      clearInterval(studyInterval);
+      studyInterval = null;
+
+      const minutesStudied = Math.floor(totalSeconds / 60);
+      const breakMinutes = Math.floor(minutesStudied * 0.20);
+
+      document.getElementById("output").innerHTML = `✅ You studied for <strong>${minutesStudied}</strong> minutes.<br>🛋️ Your break time: <strong>${breakMinutes}</strong> minutes.`;
+
+      if (breakMinutes > 0) {
+        startBreak(breakMinutes);
+      }
+
+      totalSeconds = 0;
+      updateTimerDisplay();
+    }
+
+    // Start break countdown
+    function startBreak(minutes) {
+      let seconds = minutes * 60;
+      const output = document.getElementById("output");
+
+      breakTimer = setInterval(() => {
+        const min = Math.floor(seconds / 60);
+        const sec = seconds % 60;
+        output.innerHTML += `<br>⏳ Time left: ${min} min ${sec < 10 ? '0' : ''}${sec} sec`;
+        seconds--;
+
+        if (seconds < 0) {
+          clearInterval(breakTimer);
+          output.innerHTML += "<br>🔔 Break is over! Get back to studying 💪";
+        }
+      }, 1000);
+    }
+    // --------- إعدادات التايمر الدائري ---------
+
+const circle = document.querySelector('.progress-ring__circle');
+const radius = circle.r.baseVal.value;
+// محيط الدائرة
+const circumference = 2 * Math.PI * radius;
+
+circle.style.strokeDasharray = `${circumference} ${circumference}`;
+circle.style.strokeDashoffset = circumference;
+
+function setProgress(percent) {
+  const offset = circumference - (percent / 100) * circumference;
+  circle.style.strokeDashoffset = offset;
+}
+
+// --------- ربطه بالتايمر بتاعك ---------
+// لازم تعدل الكود ده عشان يشتغل مع المتغيرات بتاعتك
+
+let totalStudyTime = 4 * 60 + 7; // مثال: 4 دقائق و 7 ثواني بالثواني
+let timePassed = 0; // الوقت اللي مر
+
+// افترض إن عندك دالة بتشتغل كل ثانية لتحديث الوقت
+function updateTimerEverySecond() {
+  // الكود بتاعك لحساب الوقت المتبقي
+  // ...
+  
+  // مثال على التحديث
+  timePassed++;
+  let percent = (timePassed / totalStudyTime) * 100;
+  
+  if (percent > 100) {
+    percent = 100;
+  }
+
+  setProgress(percent);
+
+  // تحديث النص (لو محتاج)
+  // document.getElementById('time-display').innerText = ...; 
+}
+
+// مثال لتشغيل التحديث (للتوضيح فقط)
+// setInterval(updateTimerEverySecond, 1000);
+
+// ابدأ بتحديث الدائرة للوضع الحالي
+let initialPercent = (timePassed / totalStudyTime) * 100;
+setProgress(initialPercent);
+  </script>
+</body>
+</html>
