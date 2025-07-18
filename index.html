@@ -4,13 +4,6 @@
   <meta name="viewport"> 
   <meta charset="UTF-8">
 <body>
-<!-- <div class="timer-container"> -->
-  <!-- <svg class="progress-ring" width="200" height="200">
-    <circle class="progress-ring__bg" r="90" cx="100" cy="100" />
-    <circle class="progress-ring__circle" r="90" cx="100" cy="100" />
-  </svg> -->
-<!--   
-  <span id="time-display" class="timer-text">00:00</span> -->
 </div>
 </body>
   <title> B . PI . E </title>
@@ -37,29 +30,12 @@
       margin-top: 30px;
       font-size: 24px;
     }
-    /* #timer { */
-      /* font-size: 23px;
-      margin: 100px;
-      border:2px;
-      background:rgb(185, 185, 214); 
-  
-  font-family: 'Orbitron', sans-serif; 
-  font-size: 64px;
-  color: #E0E0E0; 
-  background-color: #2C3E50;
-  padding: 20px 40px;
-  border-radius: 15px; 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.2);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); 
-  text-align: center;
-  width: fit-content; 
-  margin: 20px auto; 
-} */
+
  #timer {
   font-family: 'Orbitron', sans-serif;
   font-size: 72px;
-  color: #00FFD1; /* لون سيان فاتح زي النيون */
-  background: #1A1A1A; /* خلفية سوداء تمامًا */
+  color: #00FFD1;
+  background: #1A1A1A; 
   padding: 25px 45px;
   border-radius: 20px;
   border: 2px solid #00FFD1;
@@ -67,7 +43,7 @@
   width: fit-content;
   margin: 20px auto;
   
-  /* أهم جزء: تأثير النيون */
+  
   box-shadow: 0 0 5px #00FFD1, 
               0 0 15px #00FFD1, 
               0 0 30px #00FFD1,
@@ -75,11 +51,10 @@
 
   text-shadow: 0 0 5px #00FFD1, 0 0 10px #00FFD1;
 
-  /* حركة نبض خفيفة */
+
   animation: pulse 2s infinite alternate;
 }
 
-/* تعريف حركة النبض */
 @keyframes pulse {
   from {
     box-shadow: 0 0 5px #00FFD1, 
@@ -117,15 +92,15 @@
 
 .progress-ring__bg {
   fill: transparent;
-  stroke: #4A4A4A; /* لون الدائرة الخلفية */
+  stroke: #4A4A4A; 
   stroke-width: 10;
 }
 
 .progress-ring__circle {
   fill: transparent;
-  stroke: #00A9FF; /* لون دائرة الوقت */
+  stroke: #00A9FF; 
   stroke-width: 10;
-  stroke-linecap: round; /* حواف دائرية للخط */
+  stroke-linecap: round; 
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: stroke-dashoffset 1s linear;
@@ -235,11 +210,11 @@
         }
       }, 1000);
     }
-    // --------- إعدادات التايمر الدائري ---------
+
 
 const circle = document.querySelector('.progress-ring__circle');
 const radius = circle.r.baseVal.value;
-// محيط الدائرة
+
 const circumference = 2 * Math.PI * radius;
 
 circle.style.strokeDasharray = `${circumference} ${circumference}`;
@@ -250,19 +225,12 @@ function setProgress(percent) {
   circle.style.strokeDashoffset = offset;
 }
 
-// --------- ربطه بالتايمر بتاعك ---------
-// لازم تعدل الكود ده عشان يشتغل مع المتغيرات بتاعتك
+let totalStudyTime = 4 * 60 + 7;
+let timePassed = 0;
 
-let totalStudyTime = 4 * 60 + 7; // مثال: 4 دقائق و 7 ثواني بالثواني
-let timePassed = 0; // الوقت اللي مر
 
-// افترض إن عندك دالة بتشتغل كل ثانية لتحديث الوقت
 function updateTimerEverySecond() {
-  // الكود بتاعك لحساب الوقت المتبقي
-  // ...
-  
-  // مثال على التحديث
-  timePassed++;
+ 
   let percent = (timePassed / totalStudyTime) * 100;
   
   if (percent > 100) {
@@ -271,14 +239,10 @@ function updateTimerEverySecond() {
 
   setProgress(percent);
 
-  // تحديث النص (لو محتاج)
-  // document.getElementById('time-display').innerText = ...; 
+
 }
 
-// مثال لتشغيل التحديث (للتوضيح فقط)
-// setInterval(updateTimerEverySecond, 1000);
 
-// ابدأ بتحديث الدائرة للوضع الحالي
 let initialPercent = (timePassed / totalStudyTime) * 100;
 setProgress(initialPercent);
   </script>
